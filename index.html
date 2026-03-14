@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self';">
+    <title>Stalkero07.dev AI| Efficiency, Robustness, Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0d0d1a;
+            --secondary: #1a1a3a;
+            --accent: #00ffff; /* cyan */
+            --accent-alt: #ff00ff; /* magenta */
+            --text: #e0e0e0;
+            --text-dim: #a0a0c0;
+            --glow: 0 0 5px var(--accent), 0 0 10px var(--accent), 0 0 15px var(--accent);
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+
+        /* Loader */
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loader {
+            border: 8px solid var(--secondary);
+            border-top: 8px solid var(--accent);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        header, main {
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+
+        body.loaded header, body.loaded main {
+            opacity: 1;
+        }
+
+        /* Header Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(13, 13, 26, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            text-shadow: var(--glow);
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.4rem 0.8rem;
+            border-radius: 0; /* Sharp corners */
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 90% 100%, 0 100%);
+        }
+
+        .lang-btn:hover {
+            background: var(--accent);
+            color: var(--primary);
+            box-shadow: var(--glow);
+        }
+
+        .lang-btn.active {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .lang-separator {
+            color: var(--text-dim);
+            opacity: 0.3;
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 80px;
+        }
+
+        section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center content horizontally */
+            text-align: center; /* Center text within hero-content */
+            background: url('assets/cyber_background.png') no-repeat center center/cover;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(13, 13, 26, 0.7); /* Dark overlay */
+            backdrop-filter: blur(3px);
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(13, 13, 26, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 2;
+            pointer-events: none;
+            animation: scanlines 10s linear infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 800px; /* Limit content width */
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin: 0 auto 2rem auto;
+            max-width: 600px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.9rem 2rem;
+            border: 2px solid var(--accent);
+            border-radius: 0; /* Sharp corners */
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            clip-path: polygon(0 0, 100% 0, 100% 75%, 90% 100%, 0 100%);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+        }
+
+
+        /* About Section */
+        .about {
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            text-shadow: var(--glow);
+            text-transform: uppercase;
+        }
+
+        .section-subtitle {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .about-card {
+            background: rgba(26, 26, 58, 0.5);
+            padding: 2rem;
+            border: 1px solid var(--accent);
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px var(--accent-alt);
+        }
+
+        .about-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+        }
+
+        .about-card p {
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        /* Projects Section */
+        .projects {
+            background: rgba(13, 13, 26, 0.8);
+            border-radius: 0;
+            padding: 5rem 5%;
+            border-top: 1px solid var(--accent);
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--secondary);
+            border-radius: 0;
+            overflow: hidden;
+            border: 1px solid var(--accent);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 20px var(--accent-alt);
+        }
+
+        .project-image {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            border-bottom: 1px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-content h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+        }
+
+        .project-content p {
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+            flex: 1;
+            font-size: 0.95rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(0, 255, 255, 0.15);
+            color: var(--accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 0;
+            font-size: 0.8rem;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            clip-path: polygon(0 0, 100% 0, 100% 75%, 90% 100%, 0 100%);
+        }
+
+        /* Skills Section */
+        .skills {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skills-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.15; /* Lowers visibility so text remains legible */
+            pointer-events: none; /* Allows user clicks to pass through to the section */
+        }
+
+        /* Keep the content above the video background */
+        .skills > *:not(video) {
+            position: relative;
+            z-index: 1;
+        }
+
+        .skills-marquee-wrapper {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .skills-track {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            width: max-content;
+            animation: scrollSkills 30s linear infinite;
+            padding: 1rem 0; /* Padding allows the card hover scale to not get clipped */
+        }
+
+        .skills-track:hover {
+            animation-play-state: paused;
+        }
+
+        .skills-grid {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .skill-item {
+            background: var(--secondary);
+            padding: 1.5rem;
+            border-radius: 0;
+            border: 1px solid var(--accent);
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+            width: 220px; /* Fixed width to keep cards uniform while scrolling */
+            flex-shrink: 0;
+        }
+
+        .skill-item:hover {
+            border-color: var(--accent-alt);
+            transform: scale(1.05) skew(-3deg);
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.1));
+            box-shadow: 0 0 15px var(--accent-alt);
+        }
+
+        .skill-item h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .skill-item p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+        .skill-item i {
+            display: block;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+            color: var(--accent);
+        }
+
+        .skill-item:hover i {
+            transform: scale(1.1) rotate(5deg) skew(-5deg);
+            text-shadow: var(--glow);
+            filter: blur(0.5px);
+        }
+
+/* Optional: Make all icons follow your accent color instead of original colors */
+/* .skill-item i { color: var(--accent) !important; } */
+
+        /* Translates exactly one segment left to create a seamless infinite loop */
+        @keyframes scrollSkills {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-25% - 0.375rem)); }
+        }
+
+        /* Contact Section */
+        .contact {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.05), rgba(255, 0, 255, 0.05));
+            border-top: 1px solid var(--accent);
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .contact-content {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .contact-item a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .contact-item a:hover {
+            color: var(--accent-alt);
+            text-shadow: 0 0 10px var(--accent-alt);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 2rem 5%;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        /* Glitch Animation */
+        .glitch {
+            position: relative;
+            animation: glitch-skew 1s infinite linear alternate-reverse;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 13, 26, 0.7); /* Match hero overlay */
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--accent-alt);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--accent-alt), 2px 2px var(--accent);
+            clip: rect(86px, 450px, 100px, 0);
+            animation: glitch-anim2 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-skew {
+          0% {
+            transform: skew(0deg);
+          }
+          100% {
+            transform: skew(1deg, -1deg);
+          }
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(42px, 9999px, 44px, 0); transform: skew(0.3deg); }
+            5% { clip: rect(17px, 9999px, 96px, 0); transform: skew(0.9deg); }
+            10% { clip: rect(40px, 9999px, 62px, 0); transform: skew(0.1deg); }
+            15% { clip: rect(27px, 9999px, 84px, 0); transform: skew(0.5deg); }
+            20% { clip: rect(35px, 9999px, 49px, 0); transform: skew(0.2deg); }
+            25% { clip: rect(57px, 9999px, 88px, 0); transform: skew(0.8deg); }
+            30% { clip: rect(29px, 9999px, 73px, 0); transform: skew(0.4deg); }
+            35% { clip: rect(81px, 9999px, 43px, 0); transform: skew(0.7deg); }
+            40% { clip: rect(52px, 9999px, 77px, 0); transform: skew(0.1deg); }
+            45% { clip: rect(33px, 9999px, 92px, 0); transform: skew(0.6deg); }
+            50% { clip: rect(47px, 9999px, 59px, 0); transform: skew(0.3deg); }
+            55% { clip: rect(19px, 9999px, 78px, 0); transform: skew(0.9deg); }
+            60% { clip: rect(61px, 9999px, 45px, 0); transform: skew(0.2deg); }
+            65% { clip: rect(83px, 9999px, 53px, 0); transform: skew(0.7deg); }
+            70% { clip: rect(25px, 9999px, 68px, 0); transform: skew(0.4deg); }
+            75% { clip: rect(78px, 9999px, 91px, 0); transform: skew(0.8deg); }
+            80% { clip: rect(44px, 9999px, 63px, 0); transform: skew(0.1deg); }
+            85% { clip: rect(63px, 9999px, 80px, 0); transform: skew(0.5deg); }
+            90% { clip: rect(31px, 9999px, 71px, 0); transform: skew(0.2deg); }
+            95% { clip: rect(54px, 9999px, 86px, 0); transform: skew(0.7deg); }
+            100% { clip: rect(12px, 9999px, 95px, 0); transform: skew(0.3deg); }
+        }
+
+        @keyframes glitch-anim2 {
+            0% { clip: rect(9px, 9999px, 92px, 0); transform: skew(0.2deg); }
+            5% { clip: rect(74px, 9999px, 3px, 0); transform: skew(0.8deg); }
+            10% { clip: rect(59px, 9999px, 21px, 0); transform: skew(0.1deg); }
+            15% { clip: rect(88px, 9999px, 49px, 0); transform: skew(0.6deg); }
+            20% { clip: rect(23px, 9999px, 72px, 0); transform: skew(0.3deg); }
+            25% { clip: rect(41px, 9999px, 8px, 0); transform: skew(0.9deg); }
+            30% { clip: rect(69px, 9999px, 54px, 0); transform: skew(0.4deg); }
+            35% { clip: rect(37px, 9999px, 98px, 0); transform: skew(0.7deg); }
+            40% { clip: rect(15px, 9999px, 66px, 0); transform: skew(0.1deg); }
+            45% { clip: rect(92px, 9999px, 30px, 0); transform: skew(0.5deg); }
+            50% { clip: rect(50px, 9999px, 83px, 0); transform: skew(0.2deg); }
+            55% { clip: rect(28px, 9999px, 48px, 0); transform: skew(0.8deg); }
+            60% { clip: rect(77px, 9999px, 14px, 0); transform: skew(0.3deg); }
+            65% { clip: rect(4px, 9999px, 90px, 0); transform: skew(0.7deg); }
+            70% { clip: rect(64px, 9999px, 35px, 0); transform: skew(0.4deg); }
+            75% { clip: rect(11px, 9999px, 79px, 0); transform: skew(0.9deg); }
+            80% { clip: rect(72px, 9999px, 51px, 0); transform: skew(0.1deg); }
+            85% { clip: rect(39px, 9999px, 85px, 0); transform: skew(0.6deg); }
+            90% { clip: rect(18px, 9999px, 62px, 0); transform: skew(0.3deg); }
+            95% { clip: rect(84px, 9999px, 41px, 0); transform: skew(0.8deg); }
+            100% { clip: rect(2px, 9999px, 76px, 0); transform: skew(0.2deg); }
+        }
+
+        @media (max-width: 768px) {
+            .glitch::before,
+            .glitch::after {
+                background: transparent;
+            }
+        }
+
+        @keyframes scanlines {
+            from { background-position: 0 0; }
+            to { background-position: 0 100%; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 5%;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .logo {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links {
+                gap: 0.8rem;
+                font-size: 0.85rem;
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero {
+                flex-direction: column;
+                min-height: auto;
+                gap: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .language-toggle {
+                margin: 0 auto;
+                gap: 0.5rem;
+            }
+
+            .lang-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            section {
+                padding: 3rem 5%;
+            }
+        }
+
+        /* WhatsApp Float Button */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            border-radius: 50px;
+            text-align: center;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 100;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .whatsapp-float:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px #25d366;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+    </div>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <div class="logo">Stalker07.dev</div>
+            <ul class="nav-links">
+                <li><a href="#home" data-en="Home" data-es="Inicio">Home</a></li>
+                <li><a href="#projects" data-en="Projects" data-es="Proyectos">Projects</a></li>
+                <li><a href="#skills" data-en="Skills" data-es="Habilidades">Skills</a></li>
+                <li><a href="#about" data-en="About" data-es="Sobre mí">About</a></li>
+                <li><a href="#contact" data-en="Contact" data-es="Contacto">Contact</a></li>
+            </ul>
+            <div class="language-toggle">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <span class="lang-separator">|</span>
+                <button class="lang-btn" data-lang="es">ES</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1 class="glitch" data-text="Efficiency, Robustness, and Design, accelerated by AI." data-en="Efficiency, Robustness, and Design, accelerated by AI." data-es="Eficiencia, Robustez y Diseño, acelerados por IA.">Efficiency, Robustness, and Design, accelerated by AI.</h1>
+                <p data-en="I leverage AI to accelerate development, creating solutions that are not only efficient and robust but also beautifully designed. This speed allows for a greater focus on crafting the perfect user experience." data-es="Aprovecho la IA para acelerar el desarrollo, creando soluciones que no solo son eficientes y robustas, sino también elegantemente diseñadas. Esta velocidad permite un mayor enfoque en la creación de la experiencia de usuario perfecta.">I leverage AI to accelerate development, creating solutions that are not only efficient and robust but also beautifully designed. This speed allows for a greater focus on crafting the perfect user experience.</p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn btn-primary" data-en="View My Work" data-es="Ver Mi Trabajo">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary" data-en="Get In Touch" data-es="Ponte en Contacto">Get In Touch</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="projects" id="projects">
+            <h2 class="section-title" data-en="Featured Projects" data-es="Proyectos Destacados">Featured Projects</h2>
+            <p class="section-subtitle" data-en="A selection of my recent AI and ML work" data-es="Una selección de mis trabajos recientes en IA y ML">A selection of my recent AI and ML work</p>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        🖼️ Project Banner (1200x675px)
+                    </div>
+                    <div class="project-content">
+                        <h3 data-en="Natural Language Processing Model" data-es="Modelo de Procesamiento de Lenguaje Natural">Natural Language Processing Model</h3>
+                        <p data-en="Built a state-of-the-art NLP model for text classification and sentiment analysis. Achieved 95% accuracy on benchmark datasets." data-es="Construí un modelo NLP de última generación para clasificación de texto y análisis de sentimientos. Logré 95% de precisión en conjuntos de datos de referencia.">Built a state-of-the-art NLP model for text classification and sentiment analysis. Achieved 95% accuracy on benchmark datasets.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Transformers</span>
+                            <span class="tag">NLP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        🖼️ Project Banner (1200x675px)
+                    </div>
+                    <div class="project-content">
+                        <h3 data-en="Computer Vision Pipeline" data-es="Canalización de Visión por Computadora">Computer Vision Pipeline</h3>
+                        <p data-en="Developed an end-to-end computer vision system for object detection and image segmentation with real-time processing capabilities." data-es="Desarrollé un sistema de visión por computadora de extremo a extremo para detección de objetos y segmentación de imágenes con capacidades de procesamiento en tiempo real.">Developed an end-to-end computer vision system for object detection and image segmentation with real-time processing capabilities.</p>
+                        <div class="project-tags">
+                            <span class="tag">PyTorch</span>
+                            <span class="tag">CV</span>
+                            <span class="tag">YOLO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        🖼️ Project Banner (1200x675px)
+                    </div>
+                    <div class="project-content">
+                        <h3 data-en="Generative AI Application" data-es="Aplicación de IA Generativa">Generative AI Application</h3>
+                        <p data-en="Created a web application powered by generative AI models. Integrated with API backends and deployed to production with monitoring." data-es="Creé una aplicación web impulsada por modelos de IA generativa. Integrada con backends de API e implementada en producción con monitoreo.">Created a web application powered by generative AI models. Integrated with API backends and deployed to production with monitoring.</p>
+                        <div class="project-tags">
+                            <span class="tag">LLMs</span>
+                            <span class="tag">FastAPI</span>
+                            <span class="tag">React</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="skills" id="skills">
+            <video class="skills-video-bg" autoplay loop muted playsinline>
+                <source src="assets/background.mp4" type="video/mp4">
+            </video>
+            <h2 class="section-title" data-en="Technical Skills" data-es="Habilidades Técnicas">Technical Skills</h2>
+            <p class="section-subtitle" data-en="A selection of my technical skills, focused on creating efficient, robust, and well-designed AI solutions." data-es="Una selección de mis habilidades técnicas, enfocadas en crear soluciones de IA eficientes, robustas y bien diseñadas.">A selection of my technical skills, focused on creating efficient, robust, and well-designed AI solutions.</p>
+            
+            <div class="skills-marquee-wrapper">
+                <div class="skills-track" id="skills-track">
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <i class="devicon-python-plain" style="font-size: 2.5rem;"></i>
+                            <h4 data-en="Python" data-es="Python">Python</h4>
+                            <p>Django, FastAPI, NumPy</p>
+                        </div>
+                        <div class="skill-item">
+                            <i class="devicon-rust-original" style="font-size: 2.5rem;"></i>
+                            <h4 data-en="Rust" data-es="Rust">Rust</h4>
+                            <p>Systems & Game Mods</p>
+                        </div>
+                        <div class="skill-item">
+                            <i class="devicon-javascript-plain" style="font-size: 2.5rem;"></i>
+                            <h4 data-en="JavaScript" data-es="JavaScript">JavaScript</h4>
+                            <p>React, jQuery, ES6+</p>
+                        </div>
+                        <div class="skill-item">
+                            <i class="devicon-tensorflow-original" style="font-size: 2.5rem;"></i>
+                            <h4 data-en="AI & ML" data-es="IA y ML">AI & ML</h4>
+                            <p>TensorFlow, PyTorch</p>
+                        </div>
+                        <div class="skill-item">
+                            <i class="devicon-github-original" style="font-size: 2.5rem;"></i>
+                            <h4 data-en="Tools & DevOps" data-es="Herramientas y DevOps">Tools & DevOps</h4>
+                            <p>Git, Docker, VS Code</p>
+                        </div>
+                        <div class="skill-item">
+                            <i class="devicon-postgresql-plain" style="font-size: 2.5rem;"></i>
+                            <h4 data-en="Database" data-es="Base de Datos">Database</h4>
+                            <p>PostgreSQL, SQL</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about" id="about">
+            <h2 class="section-title" data-en="About Me" data-es="Sobre Mí">About Me</h2>
+            <p class="section-subtitle" data-en="I'm a passionate developer focusing on creating efficient, robust, and well-designed AI solutions." data-es="Soy un desarrollador apasionado enfocado en crear soluciones de IA eficientes, robustas y bien diseñadas.">I'm a passionate developer focusing on creating efficient, robust, and well-designed AI solutions.</p>
+            
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3 data-en="💡 Efficient Solutions" data-es="💡 Soluciones Eficientes">💡 Efficient Solutions</h3>
+                    <p data-en="I specialize in building high-performance AI models that are optimized for speed and resource efficiency, ensuring your applications run smoothly." data-es="Me especializo en la construcción de modelos de IA de alto rendimiento que están optimizados para la velocidad y la eficiencia de los recursos, asegurando que sus aplicaciones se ejecuten sin problemas.">I specialize in building high-performance AI models that are optimized for speed and resource efficiency, ensuring your applications run smoothly.</p>
+                </div>
+                <div class="about-card">
+                    <h3 data-en="🔒 Robust Systems" data-es="🔒 Sistemas Robustos">🔒 Robust Systems</h3>
+                    <p data-en="I build reliable and scalable AI systems that can handle real-world complexities and data, providing consistent and trustworthy results." data-es="Construyo sistemas de IA fiables y escalables que pueden manejar las complejidades y los datos del mundo real, proporcionando resultados consistentes y fiables.">I build reliable and scalable AI systems that can handle real-world complexities and data, providing consistent and trustworthy results.</p>
+                </div>
+                <div class="about-card">
+                    <h3 data-en="🎨 Thoughtful Design" data-es="🎨 Diseño Reflexivo">🎨 Thoughtful Design</h3>
+                    <p data-en="I focus on the entire user experience, from the API design to the final UI, ensuring that the AI is not just powerful, but also intuitive and easy to use." data-es="Me centro en toda la experiencia del usuario, desde el diseño de la API hasta la interfaz de usuario final, asegurando que la IA no solo sea potente, sino también intuitiva y fácil de usar.">I focus on the entire user experience, from the API design to the final UI, ensuring that the AI is not just powerful, but also intuitive and easy to use.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <h2 class="section-title" data-en="Let's Work Together" data-es="Trabajemos Juntos">Let's Work Together</h2>
+            <p class="section-subtitle" data-en="I'm always open to discussing new projects and collaborations. Let's build something amazing together." data-es="Siempre estoy abierto a discutir nuevos proyectos y colaboraciones. Construyamos algo increíble juntos.">I'm always open to discussing new projects and collaborations. Let's build something amazing together.</p>
+            
+            <div class="contact-content">
+                <div class="contact-item">
+                    <h3 style="color: var(--accent); margin-bottom: 0.5rem;" data-en="Email" data-es="Correo Electrónico">Email</h3>
+                    <a href="#" id="contact-email">Loading...</a>
+                </div>
+                <div class="contact-item">
+                    <h3 style="color: var(--accent); margin-bottom: 0.5rem;" data-en="LinkedIn" data-es="LinkedIn">LinkedIn</h3>
+                    <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">linkedin.com/in/yourprofile</a>
+                </div>
+                <div class="contact-item">
+                    <h3 style="color: var(--accent); margin-bottom: 0.5rem;" data-en="GitHub" data-es="GitHub">GitHub</h3>
+                    <a href="https://github.com/Stalkero7" target="_blank" rel="noopener noreferrer">github.com/Stalkero7</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Background Music -->
+    <audio autoplay loop>
+        <source src="assets/backgroundmusic.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Footer -->
+    <footer>
+        <p data-en="&copy; 2026 Raul Azocar. All rights reserved." data-es="&copy; 2026 Raul Azocar. Todos los derechos reservados.">&copy; 2026 Raul Azocar. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Loader functionality
+        window.addEventListener('load', () => {
+            const loaderWrapper = document.querySelector('.loader-wrapper');
+            loaderWrapper.classList.add('loader-hidden');
+            document.body.classList.add('loaded');
+        });
+
+        // Language switching functionality
+        let currentLanguage = localStorage.getItem('selectedLanguage') || 'en';
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage(currentLanguage);
+            updateLanguageButtonState();
+
+            // Construct email dynamically to hide from basic scrapers
+            const emailLink = document.getElementById('contact-email');
+            if (emailLink) {
+                const user = 'raul.azocarm';
+                const domain = 'gmail.com';
+                emailLink.href = 'mailto:' + user + '@' + domain;
+                emailLink.textContent = user + '@' + domain;
+            }
+
+            // Setup Skills Marquee duplication for seamless scrolling
+            const skillsTrack = document.getElementById('skills-track');
+            if (skillsTrack) {
+                const originalGrid = skillsTrack.querySelector('.skills-grid');
+                for (let i = 0; i < 3; i++) {
+                    const clone = originalGrid.cloneNode(true);
+                    clone.setAttribute('aria-hidden', 'true');
+                    skillsTrack.appendChild(clone);
+                }
+            }
+        });
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('selectedLanguage', lang);
+
+            document.querySelectorAll('[data-en][data-es]').forEach(element => {
+                const text = element.getAttribute(`data-${lang}`);
+                if (text) {
+                    // Update the glitch text separately
+                    if (element.classList.contains('glitch')) {
+                        element.setAttribute('data-text', text);
+                    }
+                    
+                    element.textContent = text;
+                }
+            });
+
+            updateLanguageButtonState();
+        }
+
+        function updateLanguageButtonState() {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('data-lang') === currentLanguage) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        // Language button event listeners
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                setLanguage(btn.getAttribute('data-lang'));
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-on-scroll');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Apply observer to cards
+        document.querySelectorAll('.project-card, .about-card, .skills-marquee-wrapper').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Active navigation link
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                link.style.color = 'var(--text-dim)';
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                    link.style.color = 'var(--accent)';
+                }
+            });
+        });
+    </script>
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 4.315 1.731 6.096l-.537 1.952 1.99 1.045z"/></svg>
+    </a>
+</body>
+</html>
