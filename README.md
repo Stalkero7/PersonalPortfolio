@@ -1,4 +1,4 @@
-# AI-Accelerated Personal Portfolio
+# netrunner.dev Ai - Personal Portfolio
 
 A futuristic, cyberpunk-themed portfolio built with a focus on Efficiency, Robustness, and Design.
 
